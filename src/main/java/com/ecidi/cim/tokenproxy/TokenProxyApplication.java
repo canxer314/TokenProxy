@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 
 @SpringBootApplication(exclude={DataSourceAutoConfiguration.class,HibernateJpaAutoConfiguration.class})
-public class ZxJumpApplication {
+public class TokenProxyApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ZxJumpApplication.class, args);
+		SpringApplication.run(TokenProxyApplication.class, args);
 	}
 
 }
