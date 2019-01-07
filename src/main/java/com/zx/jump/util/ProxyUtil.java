@@ -10,6 +10,8 @@ import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.net.InetSocketAddress;
 
@@ -40,8 +42,8 @@ public class ProxyUtil {
 			return true;
 		}
 		else
-			if (isCloseOnError)
-				ctx.close();
+		if (isCloseOnError)
+			ctx.close();
 		return false;
 	}
 
@@ -61,7 +63,8 @@ public class ProxyUtil {
 		//获取请求的主机和端口
 		String[] temp1 = request.headers().get("host").split(ProxyConfig.HOST_SEPARATOR);
 		//有些host没有端口,则默认为80
-		return  new InetSocketAddress(temp1[0], temp1.length == 1 ? 80 : Integer.parseInt(temp1[1]));
+//		return  new InetSocketAddress(temp1[0], temp1.length == 1 ? 80 : Integer.parseInt(temp1[1]));
+		return new InetSocketAddress("10.218.51.214", 8090);
 	}
 
 	/**
@@ -78,4 +81,29 @@ public class ProxyUtil {
 		ctx.writeAndFlush(new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.REQUEST_TIMEOUT));
 	}
 
+	public static String extractRequestToken(FullHttpRequest request) {
+		String uri = request.uri();
+		String token = null;
+		String newUri = "";
+		int paraIndx = uri.indexOf("?");
+		if (paraIndx > -1) {
+			int tsIndx = uri.indexOf("token", paraIndx);
+			if (tsIndx > -1) {
+				int teIndx = uri.length();
+				boolean ab = false; // if there '&' before token
+				// when there's a '&' in front, omit '&' behind
+				if (uri.charAt(tsIndx - 1) == '&') {
+					ab = true;
+				}
+				int aIndx = uri.indexOf("&", tsIndx + 6);
+				if (aIndx > -1) {
+					teIndx = aIndx;
+				}
+				token = uri.substring(tsIndx + 6, teIndx);
+				newUri = uri.substring(0, ab ? tsIndx - 1 : tsIndx) + uri.substring(ab ? teIndx : aIndx > -1 ? teIndx + 1 : teIndx);
+				request.setUri(newUri);
+			}
+		}
+		return token;
+	}
 }

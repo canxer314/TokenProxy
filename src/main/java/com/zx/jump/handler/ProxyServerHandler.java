@@ -11,7 +11,6 @@ import com.zx.jump.util.ChannelCacheUtil;
 import com.zx.jump.util.ProxyUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
-import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.*;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
@@ -78,14 +77,15 @@ public class ProxyServerHandler extends ChannelInboundHandlerAdapter {
                 //获取ip和端口
                 InetSocketAddress address = ProxyUtil.getAddressByRequest(request);
 
+                //TODO: 判断token
+                String token = ProxyUtil.extractRequestToken(request);
+
                 //HTTPS :
                 if (HttpMethod.CONNECT.equals(request.method())) {
                     log.info(LOG_PRE + ",https请求.目标:{}", channelId, request.uri());
 
                     //存入缓存
                     ChannelCacheUtil.put(channelId, new ChannelCache(address, connect(false, address, ctx, msg)));
-
-
 
                     //此处将用于报文编码解码的处理器去除,因为后面上方的信息都是加密过的,不符合一般报文格式,我们直接转发即可
                     ctx.pipeline().remove(ProxyServer.NAME_HTTP_CODE_HANDLER);
@@ -106,10 +106,11 @@ public class ProxyServerHandler extends ChannelInboundHandlerAdapter {
                 //HTTP:
                 log.info(LOG_PRE + ",http请求.目标:{}", channelId, request.uri());
 
-                HttpHeaders headers = request.headers();
 
-                headers.add("Connection", headers.get("Proxy-Connection"));
-                headers.remove("Proxy-Connection");
+//                HttpHeaders headers = request.headers();
+//                headers.add("Connection", headers.get("Proxy-Connection"));
+//                headers.remove("Proxy-Connection");
+
 
                 //http所有通道都不会复用,无需缓存
                 connect(true, address, ctx, msg);
@@ -215,6 +216,8 @@ public class ProxyServerHandler extends ChannelInboundHandlerAdapter {
         Bootstrap bootstrap = bootstrapFactory.build();
         //如果是http请求
         if (isHttp) {
+
+
             //添加监听器,当连接建立成功后,转发客户端的消息给它
             return bootstrap
                     .handler(new HttpConnectChannelInitializer(ctx))
