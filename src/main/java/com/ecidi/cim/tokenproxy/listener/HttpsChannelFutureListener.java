@@ -1,15 +1,11 @@
-package com.zx.jump.listener;
+package com.ecidi.cim.tokenproxy.listener;
 
-import com.zx.jump.util.ChannelCacheUtil;
-import com.zx.jump.util.ProxyUtil;
+import com.ecidi.cim.tokenproxy.util.ChannelCacheUtil;
+import com.ecidi.cim.tokenproxy.util.ProxyUtil;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ConnectTimeoutException;
-import io.netty.handler.codec.http.DefaultFullHttpResponse;
-import io.netty.handler.codec.http.DefaultHttpResponse;
-import io.netty.handler.codec.http.HttpResponseStatus;
-import io.netty.handler.codec.http.HttpVersion;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.UnknownHostException;

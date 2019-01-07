@@ -1,6 +1,6 @@
-package com.zx.jump.handler;
+package com.ecidi.cim.tokenproxy.handler;
 
-import com.zx.jump.util.ProxyUtil;
+import com.ecidi.cim.tokenproxy.util.ProxyUtil;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOutboundHandlerAdapter;

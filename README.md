@@ -244,8 +244,8 @@
 
 
 [2018-01-25 15:00:09.639] [nioEventLoopGroup-4-2               ] [INFO ] [c.zx.jump.handler.ProxyServerHandler:83  ] - [代理服务器处理类]通道id:38424a19,https请求.目标:www.google-analytics.com:443
-[2018-01-25 15:00:09.640] [nioEventLoopGroup-4-2               ] [INFO ] [com.zx.jump.util.ProxyUtil          :33  ] - 通道id:38424a19,正在向客户端写入数据.
-[2018-01-25 15:00:09.640] [nioEventLoopGroup-4-2               ] [INFO ] [com.zx.jump.util.ProxyUtil          :36  ] - 通道id:38424a19,向客户端写入数据成功.
+[2018-01-25 15:00:09.640] [nioEventLoopGroup-4-2               ] [INFO ] [ProxyUtil          :33  ] - 通道id:38424a19,正在向客户端写入数据.
+[2018-01-25 15:00:09.640] [nioEventLoopGroup-4-2               ] [INFO ] [ProxyUtil          :36  ] - 通道id:38424a19,向客户端写入数据成功.
 [2018-01-25 15:00:09.640] [nioEventLoopGroup-4-2               ] [INFO ] [c.zx.jump.handler.ProxyServerHandler:171 ] - [代理服务器处理类]通道id:38424a19读取完成.
 [2018-01-25 15:00:09.641] [nioEventLoopGroup-2-2               ] [INFO ] [c.z.j.l.HttpsChannelFutureListener  :46  ] - [https连接建立监听器]通道id:38424a19,与目标主机建立连接成功.
 [2018-01-25 15:00:09.889] [nioEventLoopGroup-4-2               ] [INFO ] [c.zx.jump.handler.ProxyServerHandler:171 ] - [代理服务器处理类]通道id:38424a19读取完成.

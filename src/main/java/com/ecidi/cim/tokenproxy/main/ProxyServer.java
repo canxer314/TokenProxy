@@ -1,8 +1,8 @@
-package com.zx.jump.main;
+package com.ecidi.cim.tokenproxy.main;
 
-import com.zx.jump.config.ProxyConfig;
-import com.zx.jump.handler.ProxyServerHandler;
-import com.zx.jump.handler.ProxyServerOutboundHandler;
+import com.ecidi.cim.tokenproxy.config.ProxyConfig;
+import com.ecidi.cim.tokenproxy.handler.ProxyServerHandler;
+import com.ecidi.cim.tokenproxy.handler.ProxyServerOutboundHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -11,14 +11,13 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.http.*;
-import io.netty.handler.timeout.IdleStateHandler;
+import io.netty.handler.codec.http.HttpObjectAggregator;
+import io.netty.handler.codec.http.HttpRequestDecoder;
+import io.netty.handler.codec.http.HttpResponseEncoder;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.concurrent.TimeUnit;
 
 
 /**

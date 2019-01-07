@@ -1,6 +1,6 @@
-package com.zx.jump.main;
+package com.ecidi.cim.tokenproxy.main;
 
-import com.zx.jump.config.ProxyConfig;
+import com.ecidi.cim.tokenproxy.config.ProxyConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.CommandLineRunner;

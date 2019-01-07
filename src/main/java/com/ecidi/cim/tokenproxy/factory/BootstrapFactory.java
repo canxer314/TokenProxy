@@ -1,6 +1,6 @@
-package com.zx.jump.factory;
+package com.ecidi.cim.tokenproxy.factory;
 
-import com.zx.jump.config.ProxyConfig;
+import com.ecidi.cim.tokenproxy.config.ProxyConfig;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;

@@ -1,7 +1,7 @@
-package com.zx.jump.initializer;
+package com.ecidi.cim.tokenproxy.initializer;
 
-import com.zx.jump.handler.HttpConnectHandler;
-import com.zx.jump.config.ProxyConfig;
+import com.ecidi.cim.tokenproxy.config.ProxyConfig;
+import com.ecidi.cim.tokenproxy.handler.HttpConnectHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;

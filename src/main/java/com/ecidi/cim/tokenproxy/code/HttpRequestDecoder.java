@@ -1,17 +1,12 @@
-package com.zx.jump.code;
+package com.ecidi.cim.tokenproxy.code;
 
-import com.zx.jump.util.ProxyUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
-import java.net.InetSocketAddress;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * author:ZhengXing

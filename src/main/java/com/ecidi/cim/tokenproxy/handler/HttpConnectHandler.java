@@ -1,10 +1,8 @@
-package com.zx.jump.handler;
+package com.ecidi.cim.tokenproxy.handler;
 
-import com.zx.jump.util.ProxyUtil;
-import io.netty.channel.ChannelFutureListener;
+import com.ecidi.cim.tokenproxy.util.ProxyUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.handler.codec.http.FullHttpResponse;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -36,7 +34,7 @@ public class HttpConnectHandler extends ChannelInboundHandlerAdapter {
 	 */
 	@Override
 	public void channelUnregistered(ChannelHandlerContext ctx0) throws Exception {
-		log.info(LOG_PRE + ",在目标服务器取消注册",ProxyUtil.getChannelId(ctx));
+        log.info(LOG_PRE + ",在目标服务器取消注册", ProxyUtil.getChannelId(ctx));
 
 		//关闭与客户端的通道
 //		ctx.close();

@@ -1,8 +1,8 @@
-package com.zx.jump.util;
+package com.ecidi.cim.tokenproxy.util;
 
+import com.ecidi.cim.tokenproxy.handler.ProxyServerHandler;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
-import com.zx.jump.handler.ProxyServerHandler;
 
 import java.util.concurrent.TimeUnit;
 
@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
  * datetime:2018/1/23 0023 10:26
  * 通道缓存工具类
  * <p>
- * see {@link com.zx.jump.handler.ProxyServerHandler.ChannelCache}
+ * see {@link ProxyServerHandler.ChannelCache}
  */
 public class ChannelCacheUtil {
 
