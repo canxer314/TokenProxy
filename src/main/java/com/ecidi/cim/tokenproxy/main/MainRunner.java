@@ -29,6 +29,7 @@ public class MainRunner implements CommandLineRunner,InitializingBean{
     @Override
     public void run(String... strings) throws Exception {
         log.info("[启动器]启动器启动中...");
+
         proxyServer.start();
 
         log.info("[启动器]启动器启动完成");

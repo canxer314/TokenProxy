@@ -3,13 +3,13 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.zx.jump</groupId>
-	<artifactId>zx-jump</artifactId>
+	<groupId>com.ecidi.cim</groupId>
+	<artifactId>token-proxy</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
 
-	<name>zx-jump</name>
-	<description>打算自己写一个代理服务器</description>
+	<name>token-proxy</name>
+	<description>转发服务器</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -130,7 +130,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>zx-jump</finalName>
+		<finalName>token-proxy</finalName>
 	</build>
 
 

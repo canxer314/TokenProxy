@@ -62,6 +62,7 @@ public class ProxyUtil {
 		//有些host没有端口,则默认为80
 //		return  new InetSocketAddress(temp1[0], temp1.length == 1 ? 80 : Integer.parseInt(temp1[1]));
 		return new InetSocketAddress("10.218.51.214", 8090);
+//		return new InetSocketAddress("10.218.50.174", 8040);
 	}
 
 	/**

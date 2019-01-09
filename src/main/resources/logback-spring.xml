@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Configuration>
+    <!--自定义颜色配置-->
+    <conversionRule conversionWord="customcolor" converterClass="com.ecidi.cim.tokenproxy.log.LogbackColorful"/>
 
     <!--将日志输出到滚动台配置-->
     <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender" >
         <layout class="ch.qos.logback.classic.PatternLayout" >
             <pattern>
-                [%d{yyyy-MM-dd HH:mm:ss.SSS}] [%-36.36thread] [%-5level] [%-36.36logger{36}:%-4.4line] - %msg%n
+                %red(%d{yyyy-MM-dd HH:mm:ss}) %green([%-24.24thread]) %customcolor(%-5level)
+                %cyan(%-36.36logger{36}:%-4.4line) - %msg%n
             </pattern>
         </layout>
     </appender>
@@ -22,13 +25,13 @@
         <!--</filter>-->
         <encoder>
             <pattern>
-                [%d{yyyy-MM-dd HH:mm:ss.SSS}] [%-36.36thread] [%-5level] [%-36.36logger{36}:%-4.4line] - %msg%n
+                %d{yyyy-MM-dd HH:mm:ss} [%-24.24thread] %-5level %-36.36logger{36}:%-4.4line - %msg%n
             </pattern>
         </encoder>
         <!--滚动策略-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--路径,在文件名中加入了时间-->
-            <fileNamePattern>/log/zx-jump/info.%d.log</fileNamePattern>
+            <fileNamePattern>/log/cim/token-proxy/info.%d.log</fileNamePattern>
         </rollingPolicy>
     </appender>
 
@@ -46,7 +49,7 @@
         <!--滚动策略-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--路径,在文件名中加入了时间-->
-            <fileNamePattern>/log/zx-jump/error.%d.log</fileNamePattern>
+            <fileNamePattern>/log/cim/token-proxy/error.%d.log</fileNamePattern>
         </rollingPolicy>
     </appender>
 

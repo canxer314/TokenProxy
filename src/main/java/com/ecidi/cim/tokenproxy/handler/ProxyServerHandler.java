@@ -76,6 +76,7 @@ public class ProxyServerHandler extends ChannelInboundHandlerAdapter {
 
                 //获取ip和端口
                 InetSocketAddress address = ProxyUtil.getAddressByRequest(request);
+                log.info("REQUEST: " + request.uri() + "  " + request.headers().toString());
 
                 //TODO: 判断token
                 String token = ProxyUtil.extractRequestToken(request);

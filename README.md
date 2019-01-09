@@ -1,7 +1,3 @@
-#### ZX-Jump Http/Https代理服务器 用于穿越长城
-* 之前想安装个chrome插件,结果蓝灯崩了,而github上许多的翻墙软件也被封了.还有的软件下载界面全是反共的宣言,  
-不太信得过.于是去vultr买了服务器,装了shadowsocks,但用起来不顺手,就想着自己写一个代理服务器.
-
 #### 注意点
 * ctx.writeAndFlush() 和 ctx.channel().writeAndFlush()的区别,前者会直接从当前handler发送消息,后者还会经过后续的handler.
 * netty的每次创建出一个连接channel的时候都会调用在之前定义的通道初始化器初始化该channel.
@@ -241,12 +237,3 @@
                 如果不符合,即表示其为https请求的后续操作.
             >
         4. 因为考虑将该类设置为可供所有channel使用,所以,使用缓存,以便在https协议后续请求到来时,还能获取到之前的
-
-
-[2018-01-25 15:00:09.639] [nioEventLoopGroup-4-2               ] [INFO ] [c.zx.jump.handler.ProxyServerHandler:83  ] - [代理服务器处理类]通道id:38424a19,https请求.目标:www.google-analytics.com:443
-[2018-01-25 15:00:09.640] [nioEventLoopGroup-4-2               ] [INFO ] [ProxyUtil          :33  ] - 通道id:38424a19,正在向客户端写入数据.
-[2018-01-25 15:00:09.640] [nioEventLoopGroup-4-2               ] [INFO ] [ProxyUtil          :36  ] - 通道id:38424a19,向客户端写入数据成功.
-[2018-01-25 15:00:09.640] [nioEventLoopGroup-4-2               ] [INFO ] [c.zx.jump.handler.ProxyServerHandler:171 ] - [代理服务器处理类]通道id:38424a19读取完成.
-[2018-01-25 15:00:09.641] [nioEventLoopGroup-2-2               ] [INFO ] [c.z.j.l.HttpsChannelFutureListener  :46  ] - [https连接建立监听器]通道id:38424a19,与目标主机建立连接成功.
-[2018-01-25 15:00:09.889] [nioEventLoopGroup-4-2               ] [INFO ] [c.zx.jump.handler.ProxyServerHandler:171 ] - [代理服务器处理类]通道id:38424a19读取完成.
-[2018-01-25 15:00:09.892] [nioEventLoopGroup-4-2               ] [ERROR] [c.zx.jump.handler.ProxyServerHandler:200 ] - [代理服务器处理类]通道id:38424a19,发生异常:Connection reset by peer
