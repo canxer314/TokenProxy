@@ -7,8 +7,7 @@
     <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender" >
         <layout class="ch.qos.logback.classic.PatternLayout" >
             <pattern>
-                %red(%d{yyyy-MM-dd HH:mm:ss}) %green([%-24.24thread]) %customcolor(%-5level)
-                %cyan(%-36.36logger{36}:%-4.4line) - %msg%n
+                %red(%d{yyyy-MM-dd HH:mm:ss}) %green([%-24.24thread]) %customcolor(%-5level) %cyan(%-36.36logger{36}:%-4.4line) - %msg%n
             </pattern>
         </layout>
     </appender>

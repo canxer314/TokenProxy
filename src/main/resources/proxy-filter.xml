@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy-filter>
+    <allow-access-filter>
+        <!--只允许访问三维资源-->
+        <url-pattern>
+            /iserver/services/[^/]+/rest/realspace/.*
+        </url-pattern>
+    </allow-access-filter>
+    <token-filter>
+        <!--需要获取token判断权限，做时间为天的redis缓存-->
+        <url-pattern>
+            /iserver/services/[^/]+/rest/realspace/datas/[^/]+/config((.sci3d)|(.sct)|(.scv)|(.kml)|(.kmz))?([?](([\w-\\.]+=[\w-\\.]*))(&([\w-\\.]+=[\w-\\.]*))*)?
+        </url-pattern>
+        <url-pattern>
+            /iserver/services/[^/]+/rest/realspace/datas/[^/]+/data/path/.+([?](([\w-\\.]+=[\w-\\.]*))(&([\w-\\.]+=[\w-\\.]*))*)?
+        </url-pattern>
+        <url-pattern>
+            /iserver/services/[^/]+/rest/realspace/datas/[^/]+/data/index/.+/.+([?](([\w-\\.]+=[\w-\\.]*))(&([\w-\\.]+=[\w-\\.]*))*)?
+        </url-pattern>
+        <!--<url-pattern>-->
+        <!--/iserver/services/3D-CBD/rest/realspace/scenes.json?token=1jo0hr6AoBIqrgY6UZk_-3nRlD-ZDF6vIK_RS6dkb6bXvdkfW3EIZ7YJgkY1DUpxPs7GXoC6yUnlAYqwjKUQ7omaCrmd8Frzsrwrs8Ye9Yk.-->
+        <!--/iserver/services/3D-CBD/rest/realspace/scenes/CBD.json?token=1jo0hr6AoBIqrgY6UZk_-3nRlD-ZDF6vIK_RS6dkb6bXvdkfW3EIZ7YJgkY1DUpxPs7GXoC6yUnlAYqwjKUQ7omaCrmd8Frzsrwrs8Ye9Yk.-->
+        <!--/iserver/services/3D-CBD/rest/realspace/scenes/CBD/layers.json?token=1jo0hr6AoBIqrgY6UZk_-3nRlD-ZDF6vIK_RS6dkb6bXvdkfW3EIZ7YJgkY1DUpxPs7GXoC6yUnlAYqwjKUQ7omaCrmd8Frzsrwrs8Ye9Yk.-->
+        <!--/iserver/services/3D-CBD/rest/realspace/scenes/CBD/layers/Building%40CBD/extendxml.xml?token=1jo0hr6AoBIqrgY6UZk_-3nRlD-ZDF6vIK_RS6dkb6bXvdkfW3EIZ7YJgkY1DUpxPs7GXoC6yUnlAYqwjKUQ7omaCrmd8Frzsrwrs8Ye9Yk.-->
+
+        <!--/iserver/services/3D-CBD/rest/realspace/datas/Tree%40CBD/config?token=1jo0hr6AoBIqrgY6UZk_-3nRlD-ZDF6vIK_RS6dkb6bXvdkfW3EIZ7YJgkY1DUpxPs7GXoC6yUnlAYqwjKUQ7omaCrmd8Frzsrwrs8Ye9Yk.-->
+
+        <!--/iserver/services/3D-CBD/rest/realspace/datas/Lake%40CBD/data/path/955833.water-->
+        <!--/iserver/services/3D-CBD/rest/realspace/datas/Tree%40CBD/data/path/Tile_-3634_10600_0000/Tile_-3634_10600_0000.s3m?token=1jo0hr6AoBIqrgY6UZk_-3nRlD-ZDF6vIK_RS6dkb6bXvdkfW3EIZ7YJgkY1DUpxPs7GXoC6yUnlAYqwjKUQ7omaCrmd8Frzsrwrs8Ye9Yk.-->
+        <!--</url-pattern>-->
+    </token-filter>
+</proxy-filter>
