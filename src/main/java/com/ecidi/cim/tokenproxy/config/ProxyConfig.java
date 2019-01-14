@@ -30,6 +30,8 @@ public class ProxyConfig {
 	@Valid
 	private SocketConfig socket = new SocketConfig();
 
+	private UriFilterConfig tokenUriPattern = new UriFilterConfig();
+
 	@Data
 	public static class SocketConfig{
 		/**
@@ -63,5 +65,11 @@ public class ProxyConfig {
 		 */
 		@Range(min = 1,max = 500,message = "处理客户端TCP连接的线程数范围有误(1-500)")
 		private Integer eventThreadNum = 8;
+	}
+
+	@Data
+	public static class UriFilterConfig {
+		private String[] allow = {};
+		private String[] authc = {};
 	}
 }

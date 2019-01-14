@@ -1,6 +1,7 @@
 package com.ecidi.cim.tokenproxy.config;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -8,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.*;
 
@@ -50,11 +52,11 @@ public class RedisConfig {
     }
 
     /**
-     * 配置自定义redisTemplate
+     * 配置自定义redisHashTemplate
      * @return
      */
-    @Bean(name = "redisTemplate")
-    public RedisTemplate<String,Object> redisTemplate(RedisConnectionFactory redisConnectionFactory){
+    @Bean(name = "redisHashTemplate")
+    public HashOperations<String, String, Boolean> redisTemplate(RedisConnectionFactory redisConnectionFactory){
         RedisTemplate<String,Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
 
@@ -63,8 +65,9 @@ public class RedisConfig {
         redisTemplate.setValueSerializer(valueSerializer());
         redisTemplate.setHashValueSerializer(valueSerializer());
 
-        log.info("自定义RedisTemplate加载完成");
-        return redisTemplate;
+        HashOperations<String, String, Boolean> hashOps = redisTemplate.opsForHash();
+        log.info("自定义redisHashTemplate加载完成");
+        return hashOps;
     }
 
     private RedisSerializer<String> keySerializer() {

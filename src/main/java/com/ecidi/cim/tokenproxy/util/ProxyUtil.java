@@ -79,6 +79,14 @@ public class ProxyUtil {
 		ctx.writeAndFlush(new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.REQUEST_TIMEOUT));
 	}
 
+	public static void responseUnauthorizaionToClient(ChannelHandlerContext ctx) {
+		ctx.writeAndFlush(new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.UNAUTHORIZED));
+	}
+
+	public static void responseNotFoundToClient(ChannelHandlerContext ctx) {
+		ctx.writeAndFlush(new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.NOT_FOUND));
+	}
+
 	public static String extractRequestToken(FullHttpRequest request) {
 		String uri = request.uri();
 		String token = null;

@@ -30,4 +30,11 @@ custom:
     proxy-port: 8088
     client-thread-num: 2
     event-thread-num: 4
+  token-uri-pattern:
+    allow:
+      - /iserver/services/[^/]+/rest/realspace/.*
+    authc:
+      - /iserver/services/[^/]+/rest/realspace/datas/[^/]+/config((.sci3d)|(.sct)|(.scv)|(.kml)|(.kmz))?([?](([\w-\\.]+=[\w-\\.]*))(&([\w-\\.]+=[\w-\\.]*))*)?
+      - /iserver/services/[^/]+/rest/realspace/datas/[^/]+/data/path/.+([?](([\w-\\.]+=[\w-\\.]*))(&([\w-\\.]+=[\w-\\.]*))*)?
+      - /iserver/services/[^/]+/rest/realspace/datas/[^/]+/data/index/.+/.+([?](([\w-\\.]+=[\w-\\.]*))(&([\w-\\.]+=[\w-\\.]*))*)?
 

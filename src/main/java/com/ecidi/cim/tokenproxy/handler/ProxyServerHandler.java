@@ -2,6 +2,7 @@ package com.ecidi.cim.tokenproxy.handler;
 
 import com.ecidi.cim.tokenproxy.config.ProxyConfig;
 import com.ecidi.cim.tokenproxy.factory.BootstrapFactory;
+import com.ecidi.cim.tokenproxy.filter.TokenMatchFilter;
 import com.ecidi.cim.tokenproxy.initializer.HttpConnectChannelInitializer;
 import com.ecidi.cim.tokenproxy.initializer.HttpsConnectChannelInitializer;
 import com.ecidi.cim.tokenproxy.listener.HttpChannelFutureListener;
@@ -9,6 +10,7 @@ import com.ecidi.cim.tokenproxy.listener.HttpsChannelFutureListener;
 import com.ecidi.cim.tokenproxy.main.ProxyServer;
 import com.ecidi.cim.tokenproxy.util.ChannelCacheUtil;
 import com.ecidi.cim.tokenproxy.util.ProxyUtil;
+import com.ecidi.cim.tokenproxy.util.TokenCacheUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.handler.codec.http.*;
@@ -43,9 +45,12 @@ public class ProxyServerHandler extends ChannelInboundHandlerAdapter {
     //bootstrap工厂
     private final BootstrapFactory bootstrapFactory;
 
-    public ProxyServerHandler(ProxyConfig proxyConfig, BootstrapFactory bootstrapFactory) {
+    private final TokenMatchFilter tokenMatchFilter;
+
+    public ProxyServerHandler(ProxyConfig proxyConfig, BootstrapFactory bootstrapFactory, TokenMatchFilter tokenMatchFilter) {
         this.proxyConfig = proxyConfig;
         this.bootstrapFactory = bootstrapFactory;
+        this.tokenMatchFilter = tokenMatchFilter;
     }
 
     @Override
@@ -77,9 +82,6 @@ public class ProxyServerHandler extends ChannelInboundHandlerAdapter {
                 //获取ip和端口
                 InetSocketAddress address = ProxyUtil.getAddressByRequest(request);
 
-                //TODO: 判断token
-                String token = ProxyUtil.extractRequestToken(request);
-
                 //HTTPS :
                 if (HttpMethod.CONNECT.equals(request.method())) {
                     log.info(LOG_PRE + ",https请求.目标:{}", channelId, request.uri());
@@ -105,6 +107,31 @@ public class ProxyServerHandler extends ChannelInboundHandlerAdapter {
                 }
                 //HTTP:
                 log.info(LOG_PRE + ",http请求.目标:{}", channelId, request.uri() + "  " + request.headers().toString());
+
+
+                String uri = request.uri();
+                if (tokenMatchFilter.isUriAllow(uri)) {
+                    if (tokenMatchFilter.isUriAuthc(uri)) {
+                        if (TokenCacheUtil.hasTokenInfo(uri)) {
+                            if (!TokenCacheUtil.getTokenInfo(uri)) {
+                               ProxyUtil.responseUnauthorizaionToClient(ctx);
+                            }
+                        } else {
+                            // TODO: 判断token
+                            String token = ProxyUtil.extractRequestToken(request);
+                            boolean isAuthorized = true;
+                            TokenCacheUtil.addTokenInfo(uri, true);
+                        }
+                    } else {
+                        ProxyUtil.responseUnauthorizaionToClient(ctx);
+                        ctx.close();
+                        return;
+                    }
+                } else {
+                    ProxyUtil.responseNotFoundToClient(ctx);
+                    ctx.close();
+                    return;
+                }
 
 
 //                HttpHeaders headers = request.headers();
