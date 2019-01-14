@@ -65,12 +65,12 @@ public class RedisConfig {
         redisTemplate.setHashValueSerializer(valueSerializer());
 
         HashOperations<String, String, Boolean> hashOps = redisTemplate.opsForHash();
-        log.info("自定义redisHashTemplate加载完成");
+        log.info("自定义redisTemplate加载完成");
         return redisTemplate;
     }
 
-    @Bean
-    public HashOperations<String, String, Object> hashOperations(RedisTemplate<String, Object> redisTemplate) {
+    @Bean(name="redisHashTemplate")
+    public HashOperations<String, String, Boolean> hashOperations(RedisTemplate<String, Object> redisTemplate) {
         return redisTemplate.opsForHash();
     }
 

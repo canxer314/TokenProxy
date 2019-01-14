@@ -22,6 +22,7 @@ import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.InetSocketAddress;
@@ -41,17 +42,24 @@ public class ProxyServerHandler extends ChannelInboundHandlerAdapter {
     private static final String LOG_PRE = "[代理服务器处理类]通道id:{}";
 
     //属性
-    private final ProxyConfig proxyConfig;
+    @Autowired
+    private ProxyConfig proxyConfig;
+
     //bootstrap工厂
-    private final BootstrapFactory bootstrapFactory;
+    @Autowired
+    private BootstrapFactory bootstrapFactory;
 
-    private final TokenMatchFilter tokenMatchFilter;
+    @Autowired
+    private TokenMatchFilter tokenMatchFilter;
 
-    public ProxyServerHandler(ProxyConfig proxyConfig, BootstrapFactory bootstrapFactory, TokenMatchFilter tokenMatchFilter) {
-        this.proxyConfig = proxyConfig;
-        this.bootstrapFactory = bootstrapFactory;
-        this.tokenMatchFilter = tokenMatchFilter;
-    }
+    @Autowired
+    private TokenCacheUtil tokenCacheUtil;
+
+//    public ProxyServerHandler(ProxyConfig proxyConfig, BootstrapFactory bootstrapFactory, TokenMatchFilter tokenMatchFilter) {
+//        this.proxyConfig = proxyConfig;
+//        this.bootstrapFactory = bootstrapFactory;
+//        this.tokenMatchFilter = tokenMatchFilter;
+//    }
 
     @Override
     public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
@@ -112,15 +120,15 @@ public class ProxyServerHandler extends ChannelInboundHandlerAdapter {
                 String uri = request.uri();
                 if (tokenMatchFilter.isUriAllow(uri)) {
                     if (tokenMatchFilter.isUriAuthc(uri)) {
-                        if (TokenCacheUtil.hasTokenInfo(uri)) {
-                            if (!TokenCacheUtil.getTokenInfo(uri)) {
+                        String token = ProxyUtil.extractRequestToken(request);
+                        if (tokenCacheUtil.hasTokenInfo(uri)) {
+                            if (!tokenCacheUtil.getTokenInfo(uri)) {
                                ProxyUtil.responseUnauthorizaionToClient(ctx);
                             }
                         } else {
                             // TODO: 判断token
-                            String token = ProxyUtil.extractRequestToken(request);
                             boolean isAuthorized = true;
-                            TokenCacheUtil.addTokenInfo(uri, true);
+                            tokenCacheUtil.addTokenInfo(uri, true);
                         }
                     } else {
                         ProxyUtil.responseUnauthorizaionToClient(ctx);
