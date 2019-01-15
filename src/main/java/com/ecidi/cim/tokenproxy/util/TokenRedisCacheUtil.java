@@ -7,8 +7,18 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
+/**
+ * @class_name:  TokenCacheUtil
+ * @package:     com.ecidi.cim.tokenproxy.util
+ * @author:      Canxer Huang
+ * @department:  Ecidi
+ * @date:        2019-1-15 11:42
+ * @description: Redis Cache for token authorization info
+ *
+ */
+
 @Component
-public class TokenCacheUtil {
+public class TokenRedisCacheUtil {
     private static final String KEY = "SuperMapTokenAuthInfo";
 
     @Autowired

@@ -10,7 +10,8 @@ import com.ecidi.cim.tokenproxy.listener.HttpsChannelFutureListener;
 import com.ecidi.cim.tokenproxy.main.ProxyServer;
 import com.ecidi.cim.tokenproxy.util.ChannelCacheUtil;
 import com.ecidi.cim.tokenproxy.util.ProxyUtil;
-import com.ecidi.cim.tokenproxy.util.TokenCacheUtil;
+import com.ecidi.cim.tokenproxy.util.TokenCaffeineCacheUtil;
+import com.ecidi.cim.tokenproxy.util.TokenRedisCacheUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.handler.codec.http.*;
@@ -53,7 +54,7 @@ public class ProxyServerHandler extends ChannelInboundHandlerAdapter {
     private TokenMatchFilter tokenMatchFilter;
 
     @Autowired
-    private TokenCacheUtil tokenCacheUtil;
+    private TokenRedisCacheUtil tokenRedisCacheUtil;
 
 //    public ProxyServerHandler(ProxyConfig proxyConfig, BootstrapFactory bootstrapFactory, TokenMatchFilter tokenMatchFilter) {
 //        this.proxyConfig = proxyConfig;
@@ -121,15 +122,28 @@ public class ProxyServerHandler extends ChannelInboundHandlerAdapter {
                 if (tokenMatchFilter.isUriAllow(uri)) {
                     if (tokenMatchFilter.isUriAuthc(uri)) {
                         String token = ProxyUtil.extractRequestToken(request);
-                        if (tokenCacheUtil.hasTokenInfo(uri)) {
-                            if (!tokenCacheUtil.getTokenInfo(uri)) {
+                        // Caffeine Cache
+                        Boolean isAuthorized = TokenCaffeineCacheUtil.getTokenInfo(uri);
+                        if (isAuthorized != null) {
+                            if (!isAuthorized) {
                                ProxyUtil.responseUnauthorizaionToClient(ctx);
                             }
                         } else {
                             // TODO: 判断token
-                            boolean isAuthorized = true;
-                            tokenCacheUtil.addTokenInfo(uri, true);
+                            isAuthorized = true;
+                            TokenCaffeineCacheUtil.setTokenInfo(uri, true);
                         }
+
+                        // Optional Redis Cache
+//                        if (tokenRedisCacheUtil.hasTokenInfo(uri)) {
+//                            if (!tokenRedisCacheUtil.getTokenInfo(uri)) {
+//                               ProxyUtil.responseUnauthorizaionToClient(ctx);
+//                            }
+//                        } else {
+//                            // TODO: 判断token
+//                            boolean isAuthorized = true;
+//                            tokenRedisCacheUtil.addTokenInfo(uri, true);
+//                        }
                     } else {
                         ProxyUtil.responseUnauthorizaionToClient(ctx);
                         ctx.close();
@@ -140,6 +154,7 @@ public class ProxyServerHandler extends ChannelInboundHandlerAdapter {
                     ctx.close();
                     return;
                 }
+
 
 
 //                HttpHeaders headers = request.headers();
